@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+Nicholas Reyes 11/2/25
 Join Pushshift submissions and comments dumps into a single CSV by linking
 comment.link_id (t3_<submission_id>) to submission.id.
 
@@ -16,7 +17,7 @@ Usage examples:
   edit the write row and w.writerow to change the columns that are output into the csv file (KEEP TEXT BODY)
 
 Dependencies:
-  pip install zstandard
+  zstandard
 """
 
 import argparse
