@@ -31,5 +31,7 @@ public:
 
     void insert(const std::string& str);
 
+    bool erase(const std::string& str);
+
     void debug();
 };
