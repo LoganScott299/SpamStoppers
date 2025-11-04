@@ -83,3 +83,16 @@ void HashTable::debug() {
     std::cout << "Load Factor: " << loadFactor << std::endl;
     std::cout << "Greatest Chain Length: " << greatestChain << std::endl;
 }
+
+// Deletes a string from the hash table. Returns true if successful or false otherwise.
+bool HashTable::erase(const std::string& str) {
+    long long key = hashString(str);
+    auto& list = data[key];
+    for (auto iter = list.begin(); iter != list.end(); ++iter) {
+        if (*iter == str) {
+            list.erase(iter);
+            return true;
+        }
+    }
+    return false;
+}
