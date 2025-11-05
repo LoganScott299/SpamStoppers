@@ -7,12 +7,14 @@
 //trie node class
 class node{
   public:
-    bool wordEnd;
-    node* children[26];
+    //indicates that spam/phrase or wrd is complete/reached its end
+    bool is_blacklisted_word;
+    //contains 128 nodes to represent ASCII character set
+    node* children[128];
 
     //constructor for trie node
     node(){
-        wordEnd = false;
+        is_blacklisted_word = false;
         for(node* c : children){
             c = nullptr;
         }
@@ -33,13 +35,13 @@ class trie {
      void insert(std::string word){
        node* curr = root;
        for(char c : word){
-         int index = c - 'a';
+         int index = static_cast<int>(c);
          if(!curr->children[index]){
            curr->children[index] = new node();
          }
          curr = curr->children[index];
        }
-       curr->wordEnd = true;
+       curr->is_blacklisted_word = true;
      }
 
      //search for word in trie
@@ -47,13 +49,13 @@ class trie {
        node* curr = root;
 
        for(char c : word){
-         int index = c - 'a';
+         int index = static_cast<int>(c);
          if(!curr->children[index]){
            return false;
          }
          curr = curr->children[index];
        }
-       return curr->wordEnd;
+       return curr->is_blacklisted_word;
      }
 
      //delete word from trie
@@ -61,15 +63,14 @@ class trie {
        node* curr = root;
 
        for(char c : word){
-         int index = c - 'a';
+         int index = static_cast<int>(c);
          if(!curr->children[index]){
            return;
          }
          curr = curr->children[index];
        }
-       if(curr->wordEnd == true){
-         curr->wordEnd = false;
+       if(curr->is_blacklisted_word == true){
+         curr->is_blacklisted_word = false;
        }
      }
-}
 
