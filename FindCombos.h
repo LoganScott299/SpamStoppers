@@ -11,7 +11,7 @@
 #include <algorithm>
 
 // Split string of words into all up to n word sequential combinations
-std::vector<std::string> up_to_n_combos(const std::string& str, int n) {
+std::vector<std::string> findUpToNCombos(const std::string& str, int n) {
     std::vector<std::string> result;
     std::vector<std::string> words;
     std::string word;
