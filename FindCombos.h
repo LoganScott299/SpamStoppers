@@ -23,8 +23,8 @@ std::vector<std::string> findUpToNCombos(const std::string& str, int n) {
     }
 
     // Generate combos up to n words
-    for (int i = 1; i < n; i++) { // For 'i' = size 1 thru n
-        for (int j = 0; j < words.size(); j++) { // For each word as a starting position
+    for (int i = 1; i <= n; i++) { // For 'i' = size 1 thru n
+        for (int j = 0; j + i <= words.size(); j++) { // For each word as a starting position
             std::string newStr = words[j];
             for (int k = 1; k < i; k++) { // Add the next 'i' words
                 newStr += " ";
@@ -63,4 +63,3 @@ std::vector<std::pair<std::string,int>> findTop10(const std::unordered_map<std::
     std::reverse(top10.begin(), top10.end());
     return top10;
 }
-
