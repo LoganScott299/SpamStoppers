@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
-            "args": ["AITH_comments.zst","AITH_submissions.zst"],
+            "args": ["data\\AITH\\AITH_submissions.jsonl","data\\AITH\\AITH_comments.jsonl"],
             "stopAtEntry": true,   
             "cwd": "${workspaceFolder}",
             "environment": [],
