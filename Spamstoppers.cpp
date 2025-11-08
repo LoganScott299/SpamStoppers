@@ -9,17 +9,20 @@
 #include "json-develop/json-develop/single_include/nlohmann/json.hpp"
 #include "FindCombos.h"
 #include "HashTable.h"
+#include "Trie.cpp"
 
 using json = nlohmann::json;
 #define SUBMISSION 1
 #define COMMENT 2
 
+//define post object
 struct Post {
     std::string author;
     std::string title;
     std::string selftext;
 };
 
+//convert post inputs to lowercase
 std::string tolowercase(std::string strmix) {
     for (char &c : strmix) {
         c = std::tolower(c);
@@ -66,6 +69,7 @@ int main(int argc, char** argv) {
         }
 
         HashTable tbl = HashTable();
+        trie t = trie();
 
         std::ifstream file2("common_spam_words.txt");
         if (!file2.is_open()) {
@@ -76,6 +80,7 @@ int main(int argc, char** argv) {
             // Convert each char to lowercase
             line = tolowercase(line);
             tbl.insert(line);
+            t.insert(line);
         }
 
         int spamCounter = 0;
@@ -89,7 +94,7 @@ int main(int argc, char** argv) {
 
             bool alreadyCounted = false;
             for (auto phrase: phrases) {
-                if (tbl.search(phrase)) { // Spam found
+                if (tbl.search(phrase) && t.search(phrase)) { // Spam found
                     if (!alreadyCounted) {
                         spamCounter++;
                         alreadyCounted = true;
@@ -98,6 +103,7 @@ int main(int argc, char** argv) {
                 }
             }
         }
+
 
         // Remove the default username for deleted accounts
         spammers.erase("[deleted]");
