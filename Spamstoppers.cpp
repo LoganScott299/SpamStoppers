@@ -9,7 +9,7 @@
 #include "json-develop/json-develop/single_include/nlohmann/json.hpp"
 #include "FindCombos.h"
 #include "HashTable.h"
-#include "Trie.cpp"
+#include "Trie.h"
 
 using json = nlohmann::json;
 #define SUBMISSION 1
@@ -103,7 +103,6 @@ int main(int argc, char** argv) {
                 }
             }
         }
-
 
         // Remove the default username for deleted accounts
         spammers.erase("[deleted]");

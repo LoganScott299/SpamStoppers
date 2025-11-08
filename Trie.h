@@ -11,13 +11,13 @@ class Tnode{
   public:
     //indicates that spam/phrase or wrd is complete/reached its end
     bool is_blacklisted_word;
-    //contains 128 Tnodes to represent ASCII character set
-    Tnode* children[128];
+    //contains 256 Tnodes to represent ASCII character set
+    Tnode* children[256];
 
     //constructor for trie Tnode
     Tnode(){
         is_blacklisted_word = false;
-        for(int i = 0; i < 128; i++){
+        for(int i = 0; i < 256; i++){
             children[i] = nullptr;
         }
     }
@@ -37,7 +37,7 @@ class trie {
      void insert(std::string word){
        Tnode* curr = root;
        for(char c : word){
-         int index = static_cast<int>(c);
+         uint8_t index = static_cast<uint8_t>(c); //because weird characters are included in jsonl
          if(!curr->children[index]){
            curr->children[index] = new Tnode();
          }
@@ -51,7 +51,7 @@ class trie {
        Tnode* curr = root;
 
        for(char c : word){
-         int index = static_cast<int>(c);
+         uint8_t index = static_cast<uint8_t>(c);
          if(!curr->children[index]){
            return false;
          }
@@ -65,7 +65,7 @@ class trie {
        Tnode* curr = root;
 
        for(char c : word){
-         int index = static_cast<int>(c);
+         uint8_t index = static_cast<uint8_t>(c);
          if(!curr->children[index]){
            return;
          }
