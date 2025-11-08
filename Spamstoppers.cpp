@@ -14,12 +14,14 @@ using json = nlohmann::json;
 #define SUBMISSION 1
 #define COMMENT 2
 
+//define post object
 struct Post {
     std::string author;
     std::string title;
     std::string selftext;
 };
 
+//convert post inputs to lowercase
 std::string tolowercase(std::string strmix) {
     for (char &c : strmix) {
         c = std::tolower(c);
