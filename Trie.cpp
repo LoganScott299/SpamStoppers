@@ -3,41 +3,43 @@
 //
 
 #include <iostream>
+#include <string>
+#include <vector>
 
-//trie node class
-class node{
+//trie Tnode class
+class Tnode{
   public:
     //indicates that spam/phrase or wrd is complete/reached its end
     bool is_blacklisted_word;
-    //contains 128 nodes to represent ASCII character set
-    node* children[128];
+    //contains 128 Tnodes to represent ASCII character set
+    Tnode* children[128];
 
-    //constructor for trie node
-    node(){
+    //constructor for trie Tnode
+    Tnode(){
         is_blacklisted_word = false;
-        for(node* c : children){
-            c = nullptr;
+        for(int i = 0; i < 128; i++){
+            children[i] = nullptr;
         }
     }
 };
 
 //trie class
 class trie {
-
-  trie* root;
+  private:
+    Tnode* root;
 
   public:
-     trie(){
-       root = new node();
+    trie(){
+       root = new Tnode();
      }
 
      //insert word into trie
      void insert(std::string word){
-       node* curr = root;
+       Tnode* curr = root;
        for(char c : word){
          int index = static_cast<int>(c);
          if(!curr->children[index]){
-           curr->children[index] = new node();
+           curr->children[index] = new Tnode();
          }
          curr = curr->children[index];
        }
@@ -46,7 +48,7 @@ class trie {
 
      //search for word in trie
      bool search(std::string word){
-       node* curr = root;
+       Tnode* curr = root;
 
        for(char c : word){
          int index = static_cast<int>(c);
@@ -60,7 +62,7 @@ class trie {
 
      //delete word from trie
      void remove(std::string word){
-       node* curr = root;
+       Tnode* curr = root;
 
        for(char c : word){
          int index = static_cast<int>(c);
@@ -73,4 +75,4 @@ class trie {
          curr->is_blacklisted_word = false;
        }
      }
-
+};
