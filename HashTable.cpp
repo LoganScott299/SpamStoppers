@@ -21,7 +21,7 @@ long long HashTable::hashString(const std::string& str) {
     int m = 2147483629; // Some large prime. I chose the second largest one that can be stored as an int
     long long hashedValue = 0;
     long long pPow = 1;
-    for (char c : str) {
+    for (unsigned char c : str) {
         hashedValue = hashedValue + (c * pPow) % m;
         pPow = (pPow * p) % m;
     }
