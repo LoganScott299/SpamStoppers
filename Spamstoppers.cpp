@@ -135,7 +135,7 @@ int main(int argc, char** argv) {
 
 
 
-        std::cout << "\n" << spamCounterHT << " spam posts detected in " << argv[i] << "using Hash Table" << std::endl;
+        std::cout << "\n" << spamCounterHT << " spam posts detected in " << argv[i] << " using Hash Table" << std::endl;
 
         // Remove the default username for deleted accounts
         spammersHT.erase("[deleted]");
@@ -146,7 +146,7 @@ int main(int argc, char** argv) {
             std::cout << i << ". " << topSpammersHT[i].first  << " : " << topSpammersHT[i].second << " spam posts\n";
         }
 
-        std::cout << "\n" << spamCounterTrie << " spam posts detected in " << argv[i] << "using Trie" << std::endl;
+        std::cout << "\n" << spamCounterTrie << " spam posts detected in " << argv[i] << " using Trie" << std::endl;
 
         // Remove the default username for deleted accounts
         spammersTrie.erase("[deleted]");
