@@ -15,14 +15,14 @@ using json = nlohmann::json;
 #define SUBMISSION 1
 #define COMMENT 2
 
-//define post object
+// Define an object to store posts
 struct Post {
     std::string author;
     std::string title;
     std::string selftext;
 };
 
-//convert post inputs to lowercase
+// Normalize text to lowercase
 std::string tolowercase(std::string strmix) {
     for (char &c : strmix) {
         c = std::tolower(c);
@@ -38,6 +38,8 @@ int main(int argc, char** argv) {
     }
     std::cerr << "Welcome to SpamStoppers!\n";
     std::cerr << "Logan Scott, Nicholas Reyes, Shravya Mandava\n";
+
+    // Parse arguments
     for (int i = 1; i < argc; i++) {
         std::cout << "Argument " << i << ": " << argv[i] << std::endl;
         std::ifstream file1(argv[i]);
@@ -49,6 +51,7 @@ int main(int argc, char** argv) {
         std::vector<Post> posts;
         std::string line;
 
+        // Parse submission and comment data into the posts vector
         while (std::getline(file1, line)) {
             json j = json::parse(line);
             Post p;
@@ -68,9 +71,11 @@ int main(int argc, char** argv) {
             }
         }
 
+        // Initialize the Trie and Hash Table
         HashTable tbl = HashTable();
         trie t = trie();
 
+        // Insert blacklisted phrases into the Trie and Hash Table
         std::ifstream file2("common_spam_words.txt");
         if (!file2.is_open()) {
             std::cerr << "Couldn't open file2." << std::endl;
@@ -83,12 +88,13 @@ int main(int argc, char** argv) {
             t.insert(line);
         }
 
-
+        // These variables store data insights
         int spamCounterHT = 0;
         int spamCounterTrie = 0;
         std::unordered_map<std::string, int> spammersHT;
         std::unordered_map<std::string, int> spammersTrie;
 
+        // This loop breaks a text into word delineated phrases and tries to search for them in the hash table
         for (auto post: posts) {
             // Find all up to 9 word combinations in the title and body
             std::vector<std::string> phrases = findUpToNCombos(post.title, 9);
@@ -107,7 +113,7 @@ int main(int argc, char** argv) {
             }
         }
 
-
+        // This loop starts at each character in a text and tries to walk the Trie
         for (auto& post : posts) {
             bool foundInTrie = false;
 
@@ -133,14 +139,13 @@ int main(int argc, char** argv) {
             }
         }
 
-
+        // This section provides the CLI output
 
         std::cout << "\n" << spamCounterHT << " spam posts detected in " << argv[i] << " using Hash Table" << std::endl;
 
-        // Remove the default username for deleted accounts
-        spammersHT.erase("[deleted]");
+        spammersHT.erase("[deleted]"); // Remove the default username for deleted accounts
 
-        std::vector<std::pair<std::string,int>> topSpammersHT = findTop10(spammersHT);
+        std::vector<std::pair<std::string,int>> topSpammersHT = findTop10(spammersHT); // Sort the unordered map for top 10 users
         std::cout << "Top 10 spammers using Hash Table:" << std::endl;
         for (int i = 1; i < topSpammersHT.size(); i++) {
             std::cout << i << ". " << topSpammersHT[i].first  << " : " << topSpammersHT[i].second << " spam posts\n";
@@ -148,10 +153,9 @@ int main(int argc, char** argv) {
 
         std::cout << "\n" << spamCounterTrie << " spam posts detected in " << argv[i] << " using Trie" << std::endl;
 
-        // Remove the default username for deleted accounts
-        spammersTrie.erase("[deleted]");
+        spammersTrie.erase("[deleted]"); // Remove the default username for deleted accounts
 
-        std::vector<std::pair<std::string,int>> topSpammersTrie = findTop10(spammersTrie);
+        std::vector<std::pair<std::string,int>> topSpammersTrie = findTop10(spammersTrie); // Sort the unordered map for top 10 users
         std::cout << "Top 10 spammers using Trie:" << std::endl;
         for (int i = 1; i < topSpammersHT.size(); i++) {
             std::cout << i << ". " << topSpammersHT[i].first  << " : " << topSpammersHT[i].second << " spam posts\n";
