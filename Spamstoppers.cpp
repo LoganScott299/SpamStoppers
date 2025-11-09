@@ -33,7 +33,7 @@ std::string tolowercase(std::string strmix) {
 int main(int argc, char** argv) {
     
     if (argc < 3) {
-        std::cerr << "Usage: " << argv[0] << " <submissions_zst_path> <comments_zst_path>\n";
+        std::cerr << "Usage: " << argv[0] << " <submissions_jsonl_path> <comments_jsonl_path>\n";
         return 1;
     }
     std::cerr << "Welcome to SpamStoppers!\n";
