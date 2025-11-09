@@ -8,7 +8,7 @@ The purpose of this repository is to house the source code and executable for Sp
 
 Files recomemnded are the Subreddit Comments and Submissions
 
-Datasets for each subreddit can be found at this link where user can torrent the specific file necessary
+Datasets for each subreddit can be found at this link where the user can torrent the specific file necessary
 
     https://academictorrents.com/details/1614740ac8c94505e4ecb9d88be8bed7b6afddd4
 
