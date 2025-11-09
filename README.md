@@ -18,11 +18,15 @@ Data/*Name of Subreddit*/*files*
 
 After unzipping the files, you must add the file extension **.jsonl**
 
+---
+
 **Spam Words List**
 
 The default list of spam words is borrowed from [Prasidhda Malla, GitHub Gist](https://gist.github.com/prasidhda/13c9303be3cbc4228585a7f1a06040a3#file-common-spam-words-2020)
 
 If needed, you can replace `common_spam_words.txt` with another `.txt` list of phrases.
+
+---
 
 **Requirements**
 
@@ -30,7 +34,7 @@ g++ 15.2.0
 
 7zip (or any other file extractor to unzip zst files)
 
-
+---
 
 **How to Run**
 
@@ -46,7 +50,8 @@ g++ 15.2.0
 SpamStoppers.exe data/AITH/AITH_submissions.jsonl data/AITH/AITH_comments.jsonl
 
 ```
- 
+
+ ---
 
 ## Authors
 
