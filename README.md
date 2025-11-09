@@ -10,7 +10,7 @@ Files recomemnded are the Subreddit Comments and Submissions
 
 Datasets for each subreddit can be found at this link where user can torrent the specific file necessary
 
-    https://academictorrents.com/details/30dee5f0406da7a353aff6a8caa2d54fd01f2ca1
+    https://academictorrents.com/details/1614740ac8c94505e4ecb9d88be8bed7b6afddd4
 
 To use the correct file format, all input files must be in the jsonl format.  However since the original datasets for each file are compressed using Zstandard compression (.zst extenstion), they need to be uncompressed and place into a data folder like:
 
