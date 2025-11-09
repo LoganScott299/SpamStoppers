@@ -17,7 +17,14 @@ To use the correct file format, all input files must be in the jsonl format.  Ho
 Data/*Name of Subreddit*/*files*
 
 After unzipping the files, you must add the file extension **.jsonl**
+
+**Spam Words List**
+
+ The default list of spam words used in this project (common_spam_words.txt) is borrowed from:
  
+ Prasidhda Malla, GitHub Gist: https://gist.github.com/prasidhda/13c9303be3cbc4228585a7f1a06040a3#file-common-spam-words-2020
+
+ If needed, you can replace this file with another .txt list of phrases
 
 **Requirements**
 
