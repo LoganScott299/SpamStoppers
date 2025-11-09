@@ -25,10 +25,8 @@ class Tnode{
 
 //trie class
 class trie {
-  private:
-    Tnode* root;
-
   public:
+    Tnode* root;
     trie(){
        root = new Tnode();
      }

@@ -31,7 +31,7 @@ std::string tolowercase(std::string strmix) {
 }
 
 int main(int argc, char** argv) {
-    
+
     if (argc < 3) {
         std::cerr << "Usage: " << argv[0] << " <submissions_jsonl_path> <comments_jsonl_path>\n";
         return 1;
@@ -83,8 +83,11 @@ int main(int argc, char** argv) {
             t.insert(line);
         }
 
-        int spamCounter = 0;
-        std::unordered_map<std::string, int> spammers;
+
+        int spamCounterHT = 0;
+        int spamCounterTrie = 0;
+        std::unordered_map<std::string, int> spammersHT;
+        std::unordered_map<std::string, int> spammersTrie;
 
         for (auto post: posts) {
             // Find all up to 9 word combinations in the title and body
@@ -96,24 +99,65 @@ int main(int argc, char** argv) {
             for (auto phrase: phrases) {
                 if (tbl.search(phrase) && t.search(phrase)) { // Spam found
                     if (!alreadyCounted) {
-                        spamCounter++;
+                        spamCounterHT++;
                         alreadyCounted = true;
-                        spammers[post.author]++;
+                        spammersHT[post.author]++;
                     }
                 }
             }
         }
 
-        // Remove the default username for deleted accounts
-        spammers.erase("[deleted]");
 
-        std::vector<std::pair<std::string,int>> topSpammers = findTop10(spammers);
-        std::cout << "Top 10 spammers:" << std::endl;
-        for (int i = 1; i < topSpammers.size(); i++) {
-            std::cout << i << ". " << topSpammers[i].first  << " : " << topSpammers[i].second << " spam posts\n";
+        for (auto& post : posts) {
+            bool foundInTrie = false;
+
+            std::string combined = post.title + " " + post.selftext;
+
+            for (int i = 0; i < combined.length() && !foundInTrie; i++) {
+                Tnode* curr = t.root;
+                for (int j = i; j < combined.length(); j++) {
+                    unsigned char ch = combined[j];
+                    if (curr->children[ch] == nullptr)
+                        break;
+                    curr = curr->children[ch];
+                    if (curr->is_blacklisted_word) {
+                        foundInTrie = true;
+                        break;
+                    }
+                }
+            }
+
+            if (foundInTrie) {
+                spamCounterTrie++;
+                spammersTrie[post.author]++;
+            }
         }
 
-        std::cout << "\nTotal spam posts detected in" << argv[i] << ": " << spamCounter << std::endl;
+
+
+        std::cout << "\n" << spamCounterHT << " spam posts detected in " << argv[i] << "using Hash Table" << std::endl;
+
+        // Remove the default username for deleted accounts
+        spammersHT.erase("[deleted]");
+
+        std::vector<std::pair<std::string,int>> topSpammersHT = findTop10(spammersHT);
+        std::cout << "Top 10 spammers using Hash Table:" << std::endl;
+        for (int i = 1; i < topSpammersHT.size(); i++) {
+            std::cout << i << ". " << topSpammersHT[i].first  << " : " << topSpammersHT[i].second << " spam posts\n";
+        }
+
+        std::cout << "\n" << spamCounterTrie << " spam posts detected in " << argv[i] << "using Trie" << std::endl;
+
+        // Remove the default username for deleted accounts
+        spammersTrie.erase("[deleted]");
+
+        std::vector<std::pair<std::string,int>> topSpammersTrie = findTop10(spammersTrie);
+        std::cout << "Top 10 spammers using Trie:" << std::endl;
+        for (int i = 1; i < topSpammersHT.size(); i++) {
+            std::cout << i << ". " << topSpammersHT[i].first  << " : " << topSpammersHT[i].second << " spam posts\n";
+        }
+
+
     }
     return 0;
 }
